@@ -1,14 +1,6 @@
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', false)
 
-console.log('conectando a',url)
-mongoose.connect(url)
-.then(result =>{
-    console.log('se conccto con exito a mongoDB')
-})
-.catch(error =>{
-    console.log('ocurrio un error', error.message)
-})
 
 const hotelSchema= new mongoose.Schema({
     nombre: {
