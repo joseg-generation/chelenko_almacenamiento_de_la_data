@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', false)
 
-
 const hotelSchema= new mongoose.Schema({
     nombre: {
         type:String,
