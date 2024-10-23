@@ -26,4 +26,4 @@ app.use("/api/hoteles", hotelesRouter)
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
 
-modele.exports = app
+module.exports = app

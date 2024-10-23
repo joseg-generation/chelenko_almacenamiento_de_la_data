@@ -1,5 +1,5 @@
 const hotelesRouter = require("express").Router();
-const Hotel = require("./models/hotel");
+const Hotel = require("../models/hotel");
 
 hotelesRouter.get("/", (req, res) => {
   Hotel.find({}).then((hoteles) => {
@@ -62,4 +62,4 @@ hotelesRouter.put("/:id", (req, res, next) => {
     .catch((error) => next(error));
 });
 
-module.express = hotelesRouter;
+module.exports = hotelesRouter;
