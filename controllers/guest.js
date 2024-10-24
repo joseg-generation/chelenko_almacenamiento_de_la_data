@@ -1,20 +1,18 @@
-const guestsRouter = requiere ('express').Router();
-const {Guest} = requiere ('../models/index');
+const guestsRouter = require ('express').Router();
+const {Guest} = require ('../models/index');
 
 // lista completa 
-guestsRouter.get('/', (req, res,next) => {
+guestsRouter.get('/', (req, res, next) => {
     Guest.find({})
-    .then(guest => {
-        res.json(guest);
-    })
-   
-})
+    .then((guests) => res.json(guests))
+    .catch((error) => res.status(500).json({ error: "Error al obtener huéspedes" }));
+});
 
 // lista por id 
 guestsRouter.get('/:id' ,(req, res, next) => {
     Guest.findById(req.params.id)
      .then (existinGuest => {
-        if (existinGuestguest) {
+        if (existinGuest) {
             res.json(existinGuest);
         } else {
             res.status(404).end()
@@ -33,61 +31,64 @@ guestsRouter.get('/:id' ,(req, res, next) => {
         email: body.email,
         phone: body.phone ||  undefined,
         nationality: body.nationality || undefined,
-        documentType: body.documentType,
-        documentNumber: body.documentNumber,
-        address: body.address,
-        preferences: body.preferences,
+        documentType: body.documentType || undefined,
+        documentNumber: body.documentNumber || undefined,
+        address: body.address || {},
+        preferences: body.preferences ? new Map(body.preferences) : new Map(),
         blacklisted: body.blacklisted || false,
-        blacklistReason: body.blacklistReason || null
+        blacklistReason: body.blacklistReason || undefined
     });
     guest.save()
-     .then(savedGuest => {
-        res.status(201).json(savedGuest);
+    .then(savedGuest => { 
+    res.status(201).json(savedGuest);
      })
      .catch(error => next(error));
  });
 
- guestsRouter.put('/id',(req,res,next) => {
+ // Editas la lista
+guestsRouter.put('/:id', (req, res, next) => {
     const body = req.body;
 
-    Guest.findById(req, params.id)
-     .then((existinGuest) => {
-        if (!existinGuest) {
-            return res.status(404).end();
-        }
-     const updatedAddress = {
-        street: bidy.address?.street || existinGuest.address.street,
-        city: body.address?.city  || existinGuest.address.city,
-        state: body.address?.state  || existinGuest.address.state,
-        country: body.address?.country  || existinGuest.country,
-        postalcode: body.address?.country  || existinGuest.address.postalcode,
-     }
+    Guest.findById(req.params.id)
+        .then((existingGuest) => {
+            if (!existingGuest) {
+                return res.status(404).end();
+            }
 
-    const guest = {
-    firstName: existinGuest.firstName,
-    lastName: existinGuest.lastName,
-    email: body.email,
-    phone: body.phone,
-    nationality: existinGuest.nationality,
-    documentType: existinGuest.documentType,
-    documentNumber: existinGuest.documentNumber,
-    address: updatedAddress,
-    preferences: body.preferences ? new Map(body.preferences):existinGuest.preferences,
-    blacklisted: existinGuest.blacklisted,
-    blacklistReason: existinGuest.blacklistReason
+            const updatedAddress = {
+                street: body.address?.street !== undefined ? body.address.street : existingGuest.address.street,
+                city: body.address?.city !== undefined ? body.address.city : existingGuest.address.city,
+                state: body.address?.state !== undefined ? body.address.state : existingGuest.address.state,
+                country: body.address?.country !== undefined ? body.address.country : existingGuest.address.country,
+                postalcode: body.address?.postalcode !== undefined ? body.address.postalcode : existingGuest.address.postalcode
+            };
 
-    }
-   
-     return Guest.findByIdAndUpdate(req.params.id, guest, { new: true })
-    .then((updatedGuest) => {
-      res.json(updatedGuest);
-    })
-    .catch(error => next(error));
-})
- });
+            const guest = {
+                firstName: body.firstName !== undefined ? body.firstName : existingGuest.firstName,
+                lastName: body.lastName !== undefined ? body.lastName : existingGuest.lastName,
+                email: body.email !== undefined ? body.email : existingGuest.email,
+                phone: body.phone !== undefined ? body.phone : existingGuest.phone,
+                nationality: body.nationality !== undefined ? body.nationality : existingGuest.nationality,
+                documentType: body.documentType !== undefined ? body.documentType : existingGuest.documentType,
+                documentNumber: body.documentNumber !== undefined ? body.documentNumber : existingGuest.documentNumber,
+                address: updatedAddress,
+                preferences: body.preferences !== undefined ? new Map(body.preferences) : existingGuest.preferences,
+                blacklisted: body.blacklisted !== undefined ? body.blacklisted : existingGuest.blacklisted,
+                blacklistReason: body.blacklistReason !== undefined ? body.blacklistReason : existingGuest.blacklistReason
+            };
 
+            return Guest.findByIdAndUpdate(req.params.id, guest, { new: true })
+                .then((updatedGuest) => {
+                    res.json(updatedGuest);
+                })
+                .catch(error => next(error));
+        })
+        .catch(error => next(error));
+});
+
+//borrar
  guestsRouter.delete('/:id', (req, res, next) => {
-    Guest.findByIdAndRemove(req.params.id)
+    Guest.findByIdDelete(req.params.id)
       .then(() => {
         res.status(204).end();
       })
