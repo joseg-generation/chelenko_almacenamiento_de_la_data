@@ -1,9 +1,5 @@
 const rateModificationRouter = require("express").Router();
-<<<<<<< HEAD
 const {RateModification, Room} = require("../models/RateModification");
-=======
-const {RateModification} = require("../models/RateModification");
->>>>>>> d0e78a1d8314c4ae779e36a7b5ebf7e8907e2821
 
 // Obtener todas todas las modificaciones
 rateModificationRouter.get("/", (req, res) => {
@@ -81,13 +77,7 @@ rateModificationRouter.put("/:id", (req, res, next) => {
       };
      
     return RateModification.findByIdAndUpdate( req.params.id, rateModification,{ new: true })
-<<<<<<< HEAD
         .then((updatedModification) => {res.json(updatedModification)})
-=======
-        .then((updatedRateModification) => {
-          res.json(updatedRateModification);
-        })
->>>>>>> d0e78a1d8314c4ae779e36a7b5ebf7e8907e2821
         .catch((error) => next(error));
     })
     .catch((error) => next(error));

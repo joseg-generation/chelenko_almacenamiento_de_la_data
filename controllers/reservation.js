@@ -96,11 +96,8 @@ reservationsRouter.put("/:id", (req, res, next) => {
     .catch((error) => next(error));
 });
 
-<<<<<<< HEAD
-module.exports = reservationsRouter;
-=======
 // Actualizar una reservación existente
-reservationRouter.put('/:id', (req, res, next) => {
+reservationsRouter.put('/:id', (req, res, next) => {
     const body = req.body;
 
     Reservation.findById(req.params.id)
@@ -133,7 +130,7 @@ reservationRouter.put('/:id', (req, res, next) => {
 });
 
 // Eliminar una reservación
-reservationRouter.delete('/:id', (req, res, next) => {
+reservationsRouter.delete('/:id', (req, res, next) => {
     Reservation.findByIdAndRemove(req.params.id)
         .then(() => {
             res.status(204).end();
@@ -142,4 +139,3 @@ reservationRouter.delete('/:id', (req, res, next) => {
 });
 
 module.exports = reservationRouter;
->>>>>>> d0e78a1d8314c4ae779e36a7b5ebf7e8907e2821

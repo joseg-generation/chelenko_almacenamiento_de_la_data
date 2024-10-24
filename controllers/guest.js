@@ -1,15 +1,15 @@
-const guestRouter = require ('express').Router();
+const guestsRouter = require ('express').Router();
 const {Guest} = require ('../models/index');
 
 // lista completa 
-guestRouter.get('/', (req, res, next) => {
+guestsRouter.get('/', (req, res, next) => {
     Guest.find({})
     .then((guests) => res.json(guests))
     .catch((error) => res.status(500).json({ error: "Error al obtener huéspedes" }));
 });
 
 // lista por id 
-guestRouter.get('/:id' ,(req, res, next) => {
+guestsRouter.get('/:id' ,(req, res, next) => {
     Guest.findById(req.params.id)
      .then (existingGuest => {
         if (existingGuest) {
@@ -22,7 +22,7 @@ guestRouter.get('/:id' ,(req, res, next) => {
 });
 
 // agregar a la lista 
- guestRouter.post('/' , (req,res, next) => {
+ guestsRouter.post('/' , (req,res, next) => {
     const body = req.body
     if (!body.firstName || !body.lastName || !body.email) {
         return res.status(400).json({ error: "Datos faltantes: firstName, lastName o email" });
@@ -49,7 +49,7 @@ guestRouter.get('/:id' ,(req, res, next) => {
 });
 
 // Editas la lista
-guestRouter.put('/:id', (req, res, next) => {
+guestsRouter.put('/:id', (req, res, next) => {
     const body = req.body;
 
     Guest.findById(req.params.id)
@@ -90,21 +90,10 @@ guestRouter.put('/:id', (req, res, next) => {
 });
 
 //borrar
-<<<<<<< HEAD
-guestsRouter.delete("/:id", (req, res, next) => {
-    Guest.findByIdAndDelete(req.params.id)
-      .then((result) => {
-        if (result) {
-          res.status(204).end();
-        } else {
-          res.status(404).end();
-        }
-=======
- guestRouter.delete('/:id', (req, res, next) => {
+ guestsRouter.delete('/:id', (req, res, next) => {
     Guest.findByIdDelete(req.params.id)
       .then(() => {
         res.status(204).end();
->>>>>>> d0e78a1d8314c4ae779e36a7b5ebf7e8907e2821
       })
       .catch(error => next(error));
   })
