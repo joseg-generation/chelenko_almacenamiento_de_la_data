@@ -85,7 +85,7 @@ roomsRouter.put("/:id", (req, res, next) => {
 });
 
 // Eliminar una habitación
-roomRouter.delete("/:id", (req, res, next) => {
+roomsRouter.delete("/:id", (req, res, next) => {
     Room.findByIdAndDelete(req.params.id)
       .then((result) => {
         if (result) {
@@ -97,5 +97,5 @@ roomRouter.delete("/:id", (req, res, next) => {
       .catch((error) => next(error));
   });
 
-module.exports = roomRouter;
+module.exports = roomsRouter;
 

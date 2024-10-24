@@ -138,4 +138,4 @@ reservationsRouter.delete('/:id', (req, res, next) => {
         .catch(error => next(error));
 });
 
-module.exports = reservationRouter;
+module.exports = reservationsRouter;

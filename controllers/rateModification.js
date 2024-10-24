@@ -84,7 +84,7 @@ rateModificationRouter.put("/:id", (req, res, next) => {
 });
 
 // Eliminar por id
-rateModificationsRouter.delete("/:id", (req, res, next) => {
+rateModificationRouter.delete("/:id", (req, res, next) => {
     RateModification.findByIdAndDelete(req.params.id)
       .then((result) => {
         if (result) {
