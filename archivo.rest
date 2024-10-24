@@ -1,0 +1,17 @@
+ 
+
+### Crear un Room
+POST http://localhost:3002/api/rooms
+Content-Type: application/json
+
+{
+    "roomNumber": "102",
+    "type": "DOUBLE",
+    "basePrice": 150.00,
+    "capacity": 3,
+    "amenities": ["Wi-Fi", "Televisión", "Minibar"],
+    "status": "AVAILABLE",
+    "description": "Habitación doble con vistas al mar",
+    "images": ["url_imagen_1", "url_imagen_2"]
+}
+

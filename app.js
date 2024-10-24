@@ -2,28 +2,33 @@ const express = require("express");
 const app = express();
 const config = require("./utils/config");
 const logger = require("./utils/logger");
-const hotelesRouter = require("./controllers/hoteles");
 const middleware = require("./utils/middleware");
 const mongoose = require("mongoose");
- 
- 
+
+const { guestsRouter, reservationsRouter, rateModificationsRouter, roomsRouter, inventoryRouter } = require("./controllers/index");
+
 mongoose.set(`strictQuery`, false);
- 
- logger.info("Connecting to ", config.MONGODB_URI);
- 
+
+logger.info("Connecting to ", config.MONGODB_URI);
+
 mongoose.connect(config.MONGODB_URI)
   .then(result => {
     logger.info("Conectado a MongoDB");
-})
+  })
   .catch(error => {
     logger.error("Error conectando a MongoDB:", error.message);
-});
- 
-app.use(express.json())
-app.use(middleware.requestLogger)
-app.use("/api/hoteles", hotelesRouter)
+  });
 
-app.use(middleware.unknownEndpoint)
-app.use(middleware.errorHandler)
+app.use(express.json());
+app.use(middleware.requestLogger);
 
-module.exports = app
+app.use("/api/guests", guestsRouter);
+app.use("/api/reservations", reservationsRouter);
+app.use("/api/rate-modifications", rateModificationsRouter);
+app.use("/api/rooms", roomsRouter);
+app.use("/api/inventory", inventoryRouter);
+
+app.use(middleware.unknownEndpoint);
+app.use(middleware.errorHandler);
+
+module.exports = app;

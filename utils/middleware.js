@@ -18,6 +18,8 @@ const errorHandler = (error, req, res, next) => {
       return res.status(400).send({error:'malformatted id' })
   } else if (error.name === 'validationError') {
       return res.status(400).json({ error: error.message})
+  } else if (error instanceof TypeError && error.message.includes('object is not iterable')) {
+      return res.status(400).json({ error: 'missing data' })
   }
   next(error)
 }
