@@ -1,5 +1,5 @@
 const rateModificationRouter = require("express").Router();
-const RateModification = require("../models/RateModification");
+const {RateModification, Room} = require("../models/RateModification");
 
 // Obtener todas todas las modificaciones
 rateModificationsRouter.get("/", (req, res) => {
@@ -77,21 +77,23 @@ rateModificationRouter.put("/:id", (req, res, next) => {
       };
      
     return RateModification.findByIdAndUpdate( req.params.id, rateModification,{ new: true })
-        .then((updatedModification) => {
-          res.json(updatedModification);
-        })
+        .then((updatedModification) => {res.json(updatedModification)})
         .catch((error) => next(error));
     })
     .catch((error) => next(error));
 });
 
 // Eliminar por id
-rateModificationRouter.delete("/:id", (req, res, next) => {
-  RateModification.findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.status(204).end();
-    })
-    .catch((error) => next(error));
-});
+rateModificationsRouter.delete("/:id", (req, res, next) => {
+    RateModification.findByIdAndDelete(req.params.id)
+      .then((result) => {
+        if (result) {
+          res.status(204).end();
+        } else {
+          res.status(404).end();
+        }
+      })
+      .catch((error) => next(error));
+  });
 
 module.exports = rateModificationRouter;

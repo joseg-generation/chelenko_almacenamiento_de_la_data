@@ -24,6 +24,9 @@ guestsRouter.get('/:id' ,(req, res, next) => {
 // agregar a la lista 
  guestsRouter.post('/' , (req,res, next) => {
     const body = req.body
+    if (!body.firstName || !body.lastName || !body.email) {
+        return res.status(400).json({ error: "Datos faltantes: firstName, lastName o email" });
+      }
 
     const guest = new Guest ({
         firstName: body.firstName,
@@ -87,13 +90,19 @@ guestsRouter.put('/:id', (req, res, next) => {
 });
 
 //borrar
- guestsRouter.delete('/:id', (req, res, next) => {
-    Guest.findByIdDelete(req.params.id)
-      .then(() => {
-        res.status(204).end();
+guestsRouter.delete("/:id", (req, res, next) => {
+    Guest.findByIdAndDelete(req.params.id)
+      .then((result) => {
+        if (result) {
+          res.status(204).end();
+        } else {
+          res.status(404).end();
+        }
       })
       .catch(error => next(error));
-  });
+  })
+  
+  
 
 
 
