@@ -80,7 +80,7 @@ reservationRouter.put('/:id', (req, res, next) => {
                 cancellationDate: body.cancellationDate || existingReservation.cancellationDate
               };
 
-            return Reservation.findByIdAndUpdate(req.params.id, updatedReservation, { new: true })
+            return Reservation.findByIdAndUpdate(req.params.id, reservation, { new: true })
                 .then(updatedReservation => {res.json(updatedReservation);})
                 .catch(error => next(error));
         })

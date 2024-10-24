@@ -1,31 +1,31 @@
-const guestsRouter = require ('express').Router();
+const guestRouter = require ('express').Router();
 const {Guest} = require ('../models/index');
 
 // lista completa 
-guestsRouter.get('/', (req, res, next) => {
+guestRouter.get('/', (req, res, next) => {
     Guest.find({})
     .then((guests) => res.json(guests))
     .catch((error) => res.status(500).json({ error: "Error al obtener huéspedes" }));
 });
 
 // lista por id 
-guestsRouter.get('/:id' ,(req, res, next) => {
+guestRouter.get('/:id' ,(req, res, next) => {
     Guest.findById(req.params.id)
-     .then (existinGuest => {
-        if (existinGuest) {
-            res.json(existinGuest);
+     .then (existingGuest => {
+        if (existingGuest) {
+            res.json(existingGuest);
         } else {
             res.status(404).end()
         }
      })
      .catch(error => next(error));
-})
+});
 
 // agregar a la lista 
- guestsRouter.post('/' , (req,res, next) => {
+ guestRouter.post('/' , (req,res, next) => {
     const body = req.body
 
-    const guest = new Guest ({
+    const guest = new Guest({
         firstName: body.firstName,
         lastName: body.lastName,
         email: body.email,
@@ -43,10 +43,10 @@ guestsRouter.get('/:id' ,(req, res, next) => {
     res.status(201).json(savedGuest);
      })
      .catch(error => next(error));
- });
+});
 
- // Editas la lista
-guestsRouter.put('/:id', (req, res, next) => {
+// Editas la lista
+guestRouter.put('/:id', (req, res, next) => {
     const body = req.body;
 
     Guest.findById(req.params.id)
@@ -54,13 +54,13 @@ guestsRouter.put('/:id', (req, res, next) => {
             if (!existingGuest) {
                 return res.status(404).end();
             }
-
+            
             const updatedAddress = {
                 street: body.address?.street !== undefined ? body.address.street : existingGuest.address.street,
                 city: body.address?.city !== undefined ? body.address.city : existingGuest.address.city,
                 state: body.address?.state !== undefined ? body.address.state : existingGuest.address.state,
                 country: body.address?.country !== undefined ? body.address.country : existingGuest.address.country,
-                postalcode: body.address?.postalcode !== undefined ? body.address.postalcode : existingGuest.address.postalcode
+                postalCode: body.address?.postalCode !== undefined ? body.address.postalCode : existingGuest.address.postalCode
             };
 
             const guest = {
@@ -87,7 +87,7 @@ guestsRouter.put('/:id', (req, res, next) => {
 });
 
 //borrar
- guestsRouter.delete('/:id', (req, res, next) => {
+ guestRouter.delete('/:id', (req, res, next) => {
     Guest.findByIdDelete(req.params.id)
       .then(() => {
         res.status(204).end();

@@ -1,8 +1,8 @@
 const rateModificationRouter = require("express").Router();
-const RateModification = require("../models/RateModification");
+const {RateModification} = require("../models/RateModification");
 
 // Obtener todas todas las modificaciones
-rateModificationsRouter.get("/", (req, res) => {
+rateModificationRouter.get("/", (req, res) => {
     RateModification.find({})
       .populate("room")
       .then((rateModifications) => res.json(rateModifications))
@@ -13,9 +13,9 @@ rateModificationsRouter.get("/", (req, res) => {
 rateModificationRouter.get("/:id", (req, res, next) => {
   RateModification.findById(req.params.id)
     .populate('room')
-    .then((existingModification) => {
-      if (existingModification) {
-        res.json(existingModification);
+    .then((existingRateModification) => {
+      if (existingRateModification) {
+        res.json(existingRateModification);
       } else {
         res.status(404).end();
       }
@@ -31,7 +31,7 @@ rateModificationRouter.post("/", (req, res, next) => {
     return res.status(400).json({ error: "Datos faltantes" });
   }
 
-  const newModification = new RateModification({
+  const rateModification = new RateModification({
     room: body.room,
     startDate: body.startDate,
     endDate: body.endDate,
@@ -45,10 +45,10 @@ rateModificationRouter.post("/", (req, res, next) => {
     syncError: body.syncError || undefined,
   });
 
-  newModification
+  rateModification
     .save()
-    .then((savedModification) => {
-      res.status(201).json(savedModification);
+    .then((savedRateModification) => {
+      res.status(201).json(savedRateModification);
     })
     .catch((error) => next(error));
 });
@@ -58,8 +58,8 @@ rateModificationRouter.put("/:id", (req, res, next) => {
   const body = req.body;
 
   RateModification.findById(req.params.id)
-    .then((existingModification) => {
-      if (!existingModification) {
+    .then((existingRateModification) => {
+      if (!existingRateModification) {
         return res.status(404).end();
       }
       const rateModification = {
@@ -77,8 +77,8 @@ rateModificationRouter.put("/:id", (req, res, next) => {
       };
      
     return RateModification.findByIdAndUpdate( req.params.id, rateModification,{ new: true })
-        .then((updatedModification) => {
-          res.json(updatedModification);
+        .then((updatedRateModification) => {
+          res.json(updatedRateModification);
         })
         .catch((error) => next(error));
     })

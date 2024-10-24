@@ -65,6 +65,7 @@ inventoryRouter.put('/:id', (req, res, next) => {
                 availableUnits: body.availableUnits !== undefined ? body.availableUnits : existingInventory.availableUnits,
                 price: body.price !== undefined ? body.price : existingInventory.price,
                 restrictions: updatedRestrictions,
+                channel: existingInventory.channel
             }
 
             return Inventory.findByIdAndUpdate(req.params.id, inventory, { new: true })
