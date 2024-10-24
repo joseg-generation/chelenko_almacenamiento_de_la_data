@@ -96,4 +96,46 @@ reservationsRouter.put("/:id", (req, res, next) => {
     .catch((error) => next(error));
 });
 
-module.exports = reservationsRouter;
+// Actualizar una reservación existente
+reservationsRouter.put('/:id', (req, res, next) => {
+    const body = req.body;
+
+    Reservation.findById(req.params.id)
+        .then(existingReservation => {
+            if (!existingReservation) {
+                return res.status(404).end();
+            }
+
+            const reservation = {
+                bookingReference: body.bookingReference || existingReservation.bookingReference,
+                guest: body.guest || existingReservation.guest,
+                room: body.room || existingReservation.room,
+                checkIn: body.checkIn || existingReservation.checkIn,
+                checkOut: body.checkOut || existingReservation.checkOut,
+                status: body.status || existingReservation.status,
+                totalPrice: body.totalPrice || existingReservation.totalPrice,
+                channel: body.channel || existingReservation.channel,
+                channelReference: body.channelReference || existingReservation.channelReference,
+                paymentStatus: body.paymentStatus || existingReservation.paymentStatus,
+                specialRequests: body.specialRequests || existingReservation.specialRequests,
+                cancellationReason: body.cancellationReason || existingReservation.cancellationReason,
+                cancellationDate: body.cancellationDate || existingReservation.cancellationDate
+              };
+
+            return Reservation.findByIdAndUpdate(req.params.id, reservation, { new: true })
+                .then(updatedReservation => {res.json(updatedReservation);})
+                .catch(error => next(error));
+        })
+        .catch(error => next(error));
+});
+
+// Eliminar una reservación
+reservationsRouter.delete('/:id', (req, res, next) => {
+    Reservation.findByIdAndRemove(req.params.id)
+        .then(() => {
+            res.status(204).end();
+        })
+        .catch(error => next(error));
+});
+
+module.exports = reservationRouter;

@@ -1,19 +1,21 @@
-const rateModificationsRouter = require("express").Router();
-const { RateModification, Room } = require("../models/index");
+const rateModificationRouter = require("express").Router();
+const {RateModification, Room} = require("../models/RateModification");
 
-rateModificationsRouter.get("/", (req, res) => {
-  RateModification.find({})
-    .populate("room")
-    .then((rateModifications) => res.json(rateModifications))
-    .catch((error) => res.status(500).json({ error: "Error al obtener modificaciones de tarifa" }));
-});
+// Obtener todas todas las modificaciones
+rateModificationRouter.get("/", (req, res) => {
+    RateModification.find({})
+      .populate("room")
+      .then((rateModifications) => res.json(rateModifications))
+      .catch((error) => res.status(500).json({ error: "Error al obtener modificaciones de tarifa" }));
+  });
 
-rateModificationsRouter.get("/:id", (req, res, next) => {
+// Obtener modificacion por el id
+rateModificationRouter.get("/:id", (req, res, next) => {
   RateModification.findById(req.params.id)
-    .populate("room")
-    .then((rateModification) => {
-      if (rateModification) {
-        res.json(rateModification);
+    .populate('room')
+    .then((existingRateModification) => {
+      if (existingRateModification) {
+        res.json(existingRateModification);
       } else {
         res.status(404).end();
       }
@@ -21,7 +23,8 @@ rateModificationsRouter.get("/:id", (req, res, next) => {
     .catch((error) => next(error));
 });
 
-rateModificationsRouter.post("/", (req, res, next) => {
+// Crear nuevas modificaciones
+rateModificationRouter.post("/", (req, res, next) => {
   const body = req.body;
 
   if (!body.room || !body.startDate || !body.endDate || !body.modificationType || !body.value || !body.channel) {
@@ -35,32 +38,23 @@ rateModificationsRouter.post("/", (req, res, next) => {
     modificationType: body.modificationType,
     value: body.value,
     reason: body.reason || undefined,
-    status: body.status || 'PENDING',
+    status: body.status || "PENDING",
     channel: body.channel,
     syncAttempts: body.syncAttempts || 0,
     lastSyncAttempt: body.lastSyncAttempt || undefined,
-    syncError: body.syncError || undefined
+    syncError: body.syncError || undefined,
   });
 
   rateModification
     .save()
-    .then((savedRateModification) => res.status(201).json(savedRateModification))
-    .catch((error) => next(error));
-});
-
-rateModificationsRouter.delete("/:id", (req, res, next) => {
-  RateModification.findByIdAndDelete(req.params.id)
-    .then((result) => {
-      if (result) {
-        res.status(204).end();
-      } else {
-        res.status(404).end();
-      }
+    .then((savedRateModification) => {
+      res.status(201).json(savedRateModification);
     })
     .catch((error) => next(error));
 });
 
-rateModificationsRouter.put("/:id", (req, res, next) => {
+// Actualizar modificaciones por id
+rateModificationRouter.put("/:id", (req, res, next) => {
   const body = req.body;
 
   RateModification.findById(req.params.id)
@@ -68,7 +62,6 @@ rateModificationsRouter.put("/:id", (req, res, next) => {
       if (!existingRateModification) {
         return res.status(404).end();
       }
-
       const rateModification = {
         room: body.room || existingRateModification.room,
         startDate: body.startDate || existingRateModification.startDate,
@@ -82,12 +75,25 @@ rateModificationsRouter.put("/:id", (req, res, next) => {
         lastSyncAttempt: body.lastSyncAttempt || existingRateModification.lastSyncAttempt,
         syncError: body.syncError || existingRateModification.syncError
       };
-
-      return RateModification.findByIdAndUpdate(req.params.id, rateModification, { new: true })
-        .then((updatedRateModification) => res.json(updatedRateModification))
+     
+    return RateModification.findByIdAndUpdate( req.params.id, rateModification,{ new: true })
+        .then((updatedModification) => {res.json(updatedModification)})
         .catch((error) => next(error));
     })
     .catch((error) => next(error));
 });
 
-module.exports = rateModificationsRouter;
+// Eliminar por id
+rateModificationsRouter.delete("/:id", (req, res, next) => {
+    RateModification.findByIdAndDelete(req.params.id)
+      .then((result) => {
+        if (result) {
+          res.status(204).end();
+        } else {
+          res.status(404).end();
+        }
+      })
+      .catch((error) => next(error));
+  });
+
+module.exports = rateModificationRouter;
