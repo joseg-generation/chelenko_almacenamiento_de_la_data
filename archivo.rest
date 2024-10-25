@@ -1,5 +1,3 @@
- 
-
 ### Crear un Room
 POST http://chelenko-data.sa-east-1.elasticbeanstalk.com/api/rooms
 Content-Type: application/json
@@ -15,8 +13,18 @@ Content-Type: application/json
     "images": ["url_imagen_1", "url_imagen_2"]
 }
 
+### Crear un Guest
+POST http://chelenko-data.sa-east-1.elasticbeanstalk.com/api/guests
+Content-Type: application/json
+ 
+{
+    "firstName": "Pepito",
+    "lastName": "Pepón",
+    "email": "pepito@pepon.com"
+}
+
 ### Crear un Reservation
-POST http://localhost:3002/api/reservations
+POST http://chelenko-data.sa-east-1.elasticbeanstalk.com/api/reservations
 Content-Type: application/json
 
 {
@@ -31,18 +39,8 @@ Content-Type: application/json
   "specialRequests": "Cama adicional"
 }
 
-### Crear un Guest
-POST http://localhost:3002/api/guests
-Content-Type: application/json
- 
-{
-    "firstName": "Pepito",
-    "lastName": "Pepón",
-    "email": "pepito@pepon.com"
-}
-
 ### crear un inventory
-POST http://localhost:3002/api/inventory
+POST http://chelenko-data.sa-east-1.elasticbeanstalk.com/api/inventory
 Content-Type: application/json
 
 {
@@ -54,7 +52,7 @@ Content-Type: application/json
 }
 
 ### Crear un Rate Modification
-POST http://localhost:3002/api/rate-modifications
+POST http://chelenko-data.sa-east-1.elasticbeanstalk.com/api/rate-modifications
 Content-Type: application/json
 
 {
