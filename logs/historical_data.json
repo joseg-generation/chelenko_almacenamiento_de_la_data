@@ -1,0 +1,34 @@
+[
+  {
+    "_id": "6722902cec2baa1b17d1d4c4",
+    "bookingReference": "BR-123459101",
+    "guest": "671a84b4e480c49046885131",
+    "room": "6719b396351799080d1486c7",
+    "checkIn": "2023-05-10T14:00:00.000Z",
+    "checkOut": "2023-06-05T12:00:00.000Z",
+    "status": "CONFIRMED",
+    "totalPrice": 500,
+    "channel": "DIRECT",
+    "paymentStatus": "PENDING",
+    "specialRequests": "Cama adicional",
+    "createdAt": "2024-10-30T19:59:40.167Z",
+    "updatedAt": "2024-10-30T19:59:40.167Z",
+    "__v": 0
+  },
+  {
+    "_id": "6722909f6dc17e41172764cf",
+    "bookingReference": "BR-12345910121",
+    "guest": "671a84b4e480c49046885131",
+    "room": "6719b396351799080d1486c7",
+    "checkIn": "2023-05-10T14:00:00.000Z",
+    "checkOut": "2023-06-05T12:00:00.000Z",
+    "status": "CONFIRMED",
+    "totalPrice": 500,
+    "channel": "DIRECT",
+    "paymentStatus": "PENDING",
+    "specialRequests": "Cama adicional",
+    "createdAt": "2024-10-30T20:01:35.795Z",
+    "updatedAt": "2024-10-30T20:01:35.795Z",
+    "__v": 0
+  }
+]
