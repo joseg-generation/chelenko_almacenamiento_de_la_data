@@ -4,4 +4,5 @@ module.exports = {
     Reservation: require('./Reservation'),
     Guest: require('./Guest'),
     RateModification: require('./RateModification'),
+    Transbank: require('./Transbank')
   };
