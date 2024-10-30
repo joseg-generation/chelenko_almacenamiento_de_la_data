@@ -5,6 +5,7 @@ const config = require("./utils/config");
 const logger = require("./utils/logger");
 const middleware = require("./utils/middleware");
 const mongoose = require("mongoose");
+const cronJobs = require("./utils/cronJobs");
 
 const { guestsRouter, reservationsRouter, rateModificationsRouter, roomsRouter, inventoryRouter, transbankRouter } = require("./controllers/index");
 

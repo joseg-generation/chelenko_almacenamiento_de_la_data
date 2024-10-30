@@ -63,3 +63,20 @@ Content-Type: application/json
   "value": 1000,
   "channel": "BOOKING"
 }
+
+### Post expirado
+
+POST http://localhost:3002/api/reservations
+Content-Type: application/json
+ 
+{
+  "bookingReference": "BR-12345910121",
+  "guest": "671a84b4e480c49046885131",  
+  "room": "6719b396351799080d1486c7",  
+  "checkIn": "2023-05-10T14:00:00Z",
+  "checkOut": "2023-06-05T12:00:00Z",
+  "status": "CONFIRMED",
+  "totalPrice": 500.00,
+  "channel": "DIRECT",
+  "specialRequests": "Cama adicional"
+}
