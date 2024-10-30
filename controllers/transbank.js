@@ -33,19 +33,37 @@ transbankRouter.get("/", (req, res, next) => {
   });
   
   transbankRouter.put("/:id", (req, res, next) => {
-    const { id } = req.params;
-    Transbank.findByIdAndUpdate(id, req.body, { new: true })
-      .populate("guest")
-      .then((updatedTransaction) => {
-        if (!updatedTransaction) {
-          const error = new Error("Transacción no encontrada");
-          error.status = 404;
-          return next(error);
+    const body = req.body;
+    
+    Transbank.findById(req.params.id)
+      .then((existingTransbank) => {
+       if (!existingTransbank) {
+          return res.status(404).end();
         }
-        res.json(updatedTransaction);
-      })
-      .catch((error) => next(error)); 
-  });
+    const transbank = {
+        guest: body.guest || existingTransbank.guest,
+        vci: body.vci || existingTransbank.vci,
+        amount: body.amount ||existingTransbank.amount,
+        status: body.status ||existingTransbank.buyOrder,
+        buyOrder: body.buyOrder ||existingTransbank.buyOrder,
+        sessionId: body.sessionId ||existingTransbank.sessionId,
+        cardDetail: body.cardDetail ||existingTransbank.cardDetail,
+        accountingDate: body.accountingDate ||existingTransbank.accountingDate,
+        transactionDate: body.transactionDate ||existingTransbank.transactionDate,
+        autorizationCode: body.autorizationCode ||existingTransbank.autorizationCode,
+        paymentTypeCode: body.autorizationCode ||existingTransbank.paymentTypeCode,
+        responseCode: body.responseCode ||existingTransbank.responseCode,
+        installmentsAmount: body.installmentsAmount ||existingTransbank.installmentsAmount,
+        installementsNumber: body.installementsNumber ||existingTransbank.installementsNumber,
+        balance: body.balance ||existingTransbank.balance,
+    }
+
+    return transbank.findByIdAndUpdate(req, params.id, transbank, {new: tue})
+    .then((updateModification) => res.json(updateModification))
+    .catch((error) => next(error));
+  })
+  .catch((error) => next (error));
+});
   
  transbankRouter.delete("/:id", (req, res, next) => {
     const { id } = req.params;
