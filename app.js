@@ -6,7 +6,7 @@ const logger = require("./utils/logger");
 const middleware = require("./utils/middleware");
 const mongoose = require("mongoose");
 
-const { guestsRouter, reservationsRouter, rateModificationsRouter, roomsRouter, inventoryRouter } = require("./controllers/index");
+const { guestsRouter, reservationsRouter, rateModificationsRouter, roomsRouter, inventoryRouter, transbankRouter } = require("./controllers/index");
 
 mongoose.set(`strictQuery`, false);
 
@@ -29,6 +29,7 @@ app.use("/api/reservations", reservationsRouter);
 app.use("/api/rate-modifications", rateModificationsRouter);
 app.use("/api/rooms", roomsRouter);
 app.use("/api/inventory", inventoryRouter);
+app.use("/api/transbank", transbankRouter);
 
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);

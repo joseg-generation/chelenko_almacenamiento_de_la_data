@@ -10,5 +10,6 @@ module.exports = {
     reservationsRouter,
     rateModificationsRouter,
     roomsRouter,
-    inventoryRouter
+    inventoryRouter,
+    transbankRouter
 };
