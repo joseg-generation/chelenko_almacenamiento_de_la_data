@@ -42,7 +42,7 @@ vci: {
     type: Date,
     required: true
   },
-  autorizationCode: {
+  authorizationCode: {
     type: String,
     maxLength: 6,
     required: true

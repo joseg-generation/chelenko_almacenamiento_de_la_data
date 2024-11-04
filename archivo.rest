@@ -97,7 +97,7 @@ Content-Type: application/json
   },
 "accountingDate": "0524",
 "transactionDate": "2019-05-22T16:41:21.063Z",
-"autorizationCode": "B13131",
+"authorizationCode": "B13131",
 "paymentTypeCode": "VN",
 "responseCode": 0,
 "installmentsAmount": 12324658,

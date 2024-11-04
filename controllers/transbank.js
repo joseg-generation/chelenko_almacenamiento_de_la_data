@@ -50,7 +50,7 @@ transbankRouter.get("/", (req, res, next) => {
         cardDetail: body.cardDetail ||existingTransbank.cardDetail,
         accountingDate: body.accountingDate ||existingTransbank.accountingDate,
         transactionDate: body.transactionDate ||existingTransbank.transactionDate,
-        autorizationCode: body.autorizationCode ||existingTransbank.autorizationCode,
+        authorizationCode: body.authorizationCode ||existingTransbank.authorizationCode,
         paymentTypeCode: body.autorizationCode ||existingTransbank.paymentTypeCode,
         responseCode: body.responseCode ||existingTransbank.responseCode,
         installmentsAmount: body.installmentsAmount ||existingTransbank.installmentsAmount,
