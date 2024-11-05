@@ -19,6 +19,6 @@ const saveToJSON = (data) => {
 
 const logReservation = (reservation) => {
     saveToJSON(reservation)
-}
+}   
 
 module.exports = { logReservation }
