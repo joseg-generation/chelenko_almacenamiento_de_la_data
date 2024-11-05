@@ -80,3 +80,13 @@ Content-Type: application/json
   "channel": "DIRECT",
   "specialRequests": "Cama adicional"
 }
+
+
+### Transbank
+PUT http://localhost:3002/api/transbank/672a1d1d044bceb81e1583b7
+Content-Type: application/json
+
+
+{
+  "amount": 500
+}

@@ -44,22 +44,22 @@ transbankRouter.get("/", (req, res, next) => {
         guest: body.guest || existingTransbank.guest,
         vci: body.vci || existingTransbank.vci,
         amount: body.amount ||existingTransbank.amount,
-        status: body.status ||existingTransbank.buyOrder,
+        status: body.status ||existingTransbank.status,
         buyOrder: body.buyOrder ||existingTransbank.buyOrder,
         sessionId: body.sessionId ||existingTransbank.sessionId,
         cardDetail: body.cardDetail ||existingTransbank.cardDetail,
         accountingDate: body.accountingDate ||existingTransbank.accountingDate,
         transactionDate: body.transactionDate ||existingTransbank.transactionDate,
-        autorizationCode: body.autorizationCode ||existingTransbank.autorizationCode,
-        paymentTypeCode: body.autorizationCode ||existingTransbank.paymentTypeCode,
+        authorizationCode: body.authorizationCode ||existingTransbank.authorizationCode,
+        paymentTypeCode: body.paymentTypeCode ||existingTransbank.paymentTypeCode,
         responseCode: body.responseCode ||existingTransbank.responseCode,
         installmentsAmount: body.installmentsAmount ||existingTransbank.installmentsAmount,
-        installementsNumber: body.installementsNumber ||existingTransbank.installementsNumber,
+        installmentsNumber: body.installmentsNumber ||existingTransbank.installmentsNumber,
         balance: body.balance ||existingTransbank.balance,
     }
 
-    return transbank.findByIdAndUpdate(req, params.id, transbank, {new: tue})
-    .then((updateModification) => res.json(updateModification))
+    return Transbank.findByIdAndUpdate(req.params.id, transbank, {new: true})
+    .then((updatedTransaction) => res.json(updatedTransaction))
     .catch((error) => next(error));
   })
   .catch((error) => next (error));
