@@ -80,28 +80,3 @@ Content-Type: application/json
   "channel": "DIRECT",
   "specialRequests": "Cama adicional"
 }
-
-### Crear un transbank
-POST http://chelenko-data.sa-east-1.elasticbeanstalk.com/api/transbank
-Content-Type: application/json
-
-{
-"guest": "671bb9e4dedb3ef3b9904896",
-"vci": "TSY",
-"amount": 10000,
-"status": "AUTHORIZED",
-"buyOrder": "12345678",
-"sessionId": "1234557545",
-"cardDetail": {
-	"cardNumber": 5284088849464040
-  },
-"accountingDate": "0524",
-"transactionDate": "2019-05-22T16:41:21.063Z",
-"authorizationCode": "B13131",
-"paymentTypeCode": "VN",
-"responseCode": 0,
-"installmentsAmount": 12324658,
-"installmentsNumber": 0,
-"balance": 126568421
-}
-
