@@ -68,6 +68,10 @@ vci: {
   balance: {
     type: Number,
     maxLength: 17
+  },
+  reservation: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Reservation'
   }  
 }, { timestamps: true });
 
